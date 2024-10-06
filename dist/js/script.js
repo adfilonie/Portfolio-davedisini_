@@ -57,4 +57,59 @@ if (
   darkToggle.checked = false;
 }
 
-//Ganti Foto
+gsap.registerPlugin(TextPlugin);
+gsap.to("#username", {
+  duration: 1,
+  text: { value: "dave", scrambleText: true },
+  delay: 0.5,
+});
+
+// Animasi scramble teks untuk #underscore
+gsap.to("#underscore", {
+  duration: 1,
+  text: { value: "disini_", scrambleText: true },
+  delay: 1.5,
+});
+
+var options = {
+  strings: [
+    '<span style="font-weight: bold;">Student.</span>',
+    '<span style="font-weight: bold;">Programmer.</span>',
+    '<span style="font-weight: bold;">Gamer.</span>',
+  ],
+  typeSpeed: 100,
+  backSpeed: 50,
+  backDelay: 1000,
+  startDelay: 100,
+  loop: true,
+  showCursor: true,
+  cursorChar: "|",
+};
+
+var typed = new Typed("#animated-text", options);
+gsap.from("#navbargua", { duration: 1.5, y: "-100%", opacity: 0 });
+const images = ["img/5.png", "img/6.png"]; // Array berisi file gambar
+let currentImageIndex = 0;
+
+function flipImage() {
+  const imgElement = document.querySelector(".rotate-img");
+  currentImageIndex = (currentImageIndex + 1) % images.length; // Loop ke gambar berikutnya
+
+  // Animasi rotasi flip ke belakang
+  gsap.to(imgElement, {
+    duration: 0.8,
+    rotationY: 90,
+    ease: "power2.in",
+    onComplete: () => {
+      imgElement.src = images[currentImageIndex]; // Ganti sumber gambar ketika flip selesai
+      gsap.fromTo(
+        imgElement,
+        { rotationY: -90 }, // Mulai dari sisi belakang
+        { duration: 0.8, rotationY: 0, ease: "power2.out" } // Flip kembali ke depan
+      );
+    },
+  });
+}
+
+// Ganti gambar setiap 3 detik
+setInterval(flipImage, 3000);
